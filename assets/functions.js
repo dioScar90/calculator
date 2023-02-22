@@ -1,12 +1,7 @@
 const arg1 = document.querySelector("#arg1");
 const arg2 = document.querySelector("#arg2");
 const operator = document.querySelector("#operator");
-const teste = new Teste();
-
-function novoProp() {
-    teste.mudaProp('fila duma égua');
-    teste.printa();
-}
+const calculator = new Calculator();
 
 function changeDisplay(value) {
     const display = document.querySelector("#display");
@@ -20,7 +15,7 @@ function resetValues() {
 }
 
 function fazIsso() {
-    const calculator = new Calculator(arg1.value, arg2.value, operator.value);
+    // const calculator = new Calculator(arg1.value, arg2.value, operator.value);
     let result = calculator.calculate();
     resetValues();
     arg1.value = result;
@@ -35,30 +30,41 @@ function calculate(e) {
     let key = values[e.submitter.id];
 
     if (key == "AC") {
-        resetValues();
+        calculator.callAC();
         changeDisplay(0);
         return;
     }
-    
-    if (arg1.value == '') {
-        arg1.value = +key;
-        changeDisplay(key);
+
+    if (key == ".") {
+        calculator.setDot();
+        return;
+    }
+
+    if (key == "=") {
+        let result = calculator.calculate();
+        changeDisplay(result);
         return;
     }
 
     if (['+','-','*','/'].indexOf(key) > -1) {
-        operator.value = key;
+        calculator.setOperator(key);
+        // operator.value = key;
         return;
     }
-
-    if (arg2.value == '' && operator.value != '') {
-        arg2.value = +key;
-        changeDisplay(key);
+    
+    if (calculator.getOperator() == '') {
+        calculator.setArg1(key);
+        let currentNumber = calculator.getArg1();
+        changeDisplay(currentNumber);
         return;
     }
-
-    if (key == "=")
-        fazIsso();
+    
+    if (calculator.getArg1() > 0 && calculator.getOperator() != '') {
+        calculator.setArg2(key);
+        let currentNumber = calculator.getArg2();
+        changeDisplay(currentNumber);
+        return;
+    }
 }
 
 function changeInput(id) {

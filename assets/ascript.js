@@ -26,33 +26,131 @@ class Calculator {
     #arg1;
     #arg2;
     #operator;
+    #dot;
+    #zerosAfterDot;
 
-    constructor(arg1, arg2, operator) {
-        this.#arg1 = +arg1;
-        this.#arg2 = +arg2;
-        this.#operator = operator;
+    constructor() {
+        this.#arg1 = 0;
+        this.#arg2 = 0;
+        this.#operator = '';
+        this.#dot = false;
+        this.#zerosAfterDot = 0;
     }
-
-    getArg1 = () => this.#arg1;
-    setArg1 = (arg1) => this.#arg1 = arg1;
     
-    getArg2 = () => this.#arg2;
-    setArg2 = (arg2) => this.#arg2 = arg2;
+    getArg1 = () => {
+        let stringArg1 = this.#arg1.toString();
+        if (this.#dot === true) {
+            stringArg1 += '0'.repeat(this.#zerosAfterDot);
+        }
+        return stringArg1;
+    }
+    setArg1 = (value) => {
+        let intValue = +value;
+        if (this.#dot === true) {
+            if (intValue == 0) {
+                this.#zerosAfterDot++;
+                return;
+            }
+
+            const numbersAfterSplit = this.#arg1.toString().split('.');
+            const lenAfterDot = numbersAfterSplit.length > 1 ? numbersAfterSplit[1].length : 0;
+            const tempNumber = this.#arg1 + +("0." + '0'.repeat(lenAfterDot) + intValue);
+            this.#arg1 = +tempNumber.toFixed(lenAfterDot + 1);
+            this.#zerosAfterDot = 0;
+            return;
+        }
+
+        if (this.#arg1 == 0) {
+            this.#arg1 = intValue;
+            return;
+        }
+        const lenArg1 = this.#arg1.toString().length;
+        this.#arg1 = +(this.#arg1 + '0') + intValue;
+    }
+    
+    getArg2 = () => {
+        let stringArg2 = this.#arg2.toString();
+        if (this.#dot === true) {
+            stringArg2 += '0'.repeat(this.#zerosAfterDot);
+        }
+        return stringArg2;
+    }
+    setArg2 = (value) => {
+        let intValue = +value;
+        if (this.#dot === true) {
+            if (intValue == 0) {
+                this.#zerosAfterDot++;
+                return;
+            }
+
+            const numbersAfterSplit = this.#arg2.toString().split('.');
+            const lenAfterDot = numbersAfterSplit.length > 1 ? numbersAfterSplit[1].length : 0;
+            const tempNumber = this.#arg2 + +("0." + '0'.repeat(lenAfterDot) + intValue);
+            this.#arg2 = +tempNumber.toFixed(lenAfterDot + 1);
+            this.#zerosAfterDot = 0;
+            return;
+        }
+
+        if (this.#arg2 == 0) {
+            this.#arg2 = intValue;
+            return;
+        }
+        const lenArg2 = this.#arg2.toString().length;
+        this.#arg2 = +(this.#arg2 + '0') + intValue;
+    }
     
     getOperator = () => this.#operator;
-    setOoperator = (operator) => this.#operator = operator;
+    setOperator = (operator) => {
+        this.#operator = operator;
+        this.#dot = false;
+        this.#zerosAfterDot = 0;
+    }
+    
+    getDot = () => this.#dot;
+    setDot = () => this.#dot = true;
+
+    #isInteger(value) {
+        return Number.isInteger(value);
+    }
+
+    #cleanAll() {
+        this.#arg1 = 0;
+        this.#arg2 = 0;
+        this.#operator = '';
+        this.#dot = false;
+        this.#zerosAfterDot = 0;
+    }
+
+    #changePropertiesAfterCalculation(result) {
+        this.#cleanAll();
+        
+        if (!this.#isInteger(result)) {
+            this.#dot = true;
+            this.#zerosAfterDot = result.toString().split('.')[1].length;
+        }
+
+        this.#arg1 = result;
+    }
 
     #add() {
-        return this.#arg1 + this.#arg2;
+        let result = this.#arg1 + this.#arg2;
+        this.#changePropertiesAfterCalculation(result);
+        return result;
     }
     #subtract() {
-        return this.#arg1 - this.#arg2;
+        let result = this.#arg1 - this.#arg2;
+        this.#changePropertiesAfterCalculation(result);
+        return result;
     }
     #multiply() {
-        return this.#arg1 * this.#arg2;
+        let result = this.#arg1 * this.#arg2;
+        this.#changePropertiesAfterCalculation(result);
+        return result;
     }
     #divide() {
-        return this.#arg1 / this.#arg2;
+        let result = this.#arg1 / this.#arg2;
+        this.#changePropertiesAfterCalculation(result);
+        return result;
     }
 
     calculate() {
@@ -66,28 +164,12 @@ class Calculator {
             case '/' :
                 return this.#divide();
             default:
-                throw "Error during calculate.";
+                this.#cleanAll();
+                throw "ERR";
         }
     }
-}
 
-class Teste {
-    #prop1;
-
-    constructor() {
-        this.#prop1 = 'começou essa bagaca';
-        this.#printaPop();
-    }
-
-    #printaPop() {
-        console.log(this.#prop1);
-    }
-
-    printa() {
-        this.#printaPop();
-    }
-
-    mudaProp(value) {
-        this.#prop1 = value;
+    callAC() {
+        this.#cleanAll();
     }
 }

@@ -12,7 +12,7 @@
         <form method="post" id="form-calc" onsubmit="calculate(event)">
             <div class="calculator">
                 <div id="display" class="display">
-                    100
+                    0
                 </div>
                 <div class="linha">
                     <button id="btn-ac" class="btn triple-btn detach">AC</button>
@@ -54,7 +54,7 @@
                     <button id="btn-0" class="btn double-btn">0</button>
                     <input type="hidden" name="btn-0" value="0">
                     <button id="btn-comma" class="btn unique-btn">&#44;</button>
-                    <input type="hidden" name="btn-comma" value=",">
+                    <input type="hidden" name="btn-comma" value=".">
                     <button id="btn-equal" class="btn unique-btn detach">&#61;</button>
                     <input type="hidden" name="btn-equal" value="=">
                 </div>
@@ -63,8 +63,6 @@
                 <input type="hidden" id="arg2" value="">
                 <input type="hidden" id="operator" value="">
             </div>
-
-            <!-- <button onclick="novoProp()" class="btn unique-btn">2</button> -->
         </form>
     </main>
     
