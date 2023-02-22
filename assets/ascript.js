@@ -30,8 +30,8 @@ class Calculator {
     #zerosAfterDot;
 
     constructor() {
-        this.#arg1 = 0;
-        this.#arg2 = 0;
+        this.#arg1 = '';
+        this.#arg2 = '';
         this.#operator = '';
         this.#dot = false;
         this.#zerosAfterDot = 0;
@@ -60,11 +60,10 @@ class Calculator {
             return;
         }
 
-        if (this.#arg1 == 0) {
+        if (this.#arg1 === '') {
             this.#arg1 = intValue;
             return;
         }
-        const lenArg1 = this.#arg1.toString().length;
         this.#arg1 = +(this.#arg1 + '0') + intValue;
     }
     
@@ -95,27 +94,32 @@ class Calculator {
             this.#arg2 = intValue;
             return;
         }
-        const lenArg2 = this.#arg2.toString().length;
         this.#arg2 = +(this.#arg2 + '0') + intValue;
     }
     
     getOperator = () => this.#operator;
     setOperator = (operator) => {
         this.#operator = operator;
+
+        let result = this.#arg2 !== '' ? this.#prepareCalculation(true) : false;
+        if (result !== false)
+            this.#arg1 = result;
+        
+        this.#arg2 = '';
         this.#dot = false;
         this.#zerosAfterDot = 0;
+        
+        return result;
     }
     
     getDot = () => this.#dot;
     setDot = () => this.#dot = true;
 
-    #isInteger(value) {
-        return Number.isInteger(value);
-    }
+    #isInteger = (value) => Number.isInteger(value);
 
     #cleanAll() {
-        this.#arg1 = 0;
-        this.#arg2 = 0;
+        this.#arg1 = '';
+        this.#arg2 = '';
         this.#operator = '';
         this.#dot = false;
         this.#zerosAfterDot = 0;
@@ -124,7 +128,7 @@ class Calculator {
     #changePropertiesAfterCalculation(result) {
         this.#cleanAll();
         
-        if (!this.#isInteger(result)) {
+        if (!this.#isInteger(result) && !isNaN(result)) {
             this.#dot = true;
             this.#zerosAfterDot = result.toString().split('.')[1].length;
         }
@@ -132,42 +136,39 @@ class Calculator {
         this.#arg1 = result;
     }
 
-    #add() {
-        let result = this.#arg1 + this.#arg2;
-        this.#changePropertiesAfterCalculation(result);
-        return result;
-    }
-    #subtract() {
-        let result = this.#arg1 - this.#arg2;
-        this.#changePropertiesAfterCalculation(result);
-        return result;
-    }
-    #multiply() {
-        let result = this.#arg1 * this.#arg2;
-        this.#changePropertiesAfterCalculation(result);
-        return result;
-    }
-    #divide() {
-        let result = this.#arg1 / this.#arg2;
-        this.#changePropertiesAfterCalculation(result);
-        return result;
-    }
+    #add = () => this.#arg1 + this.#arg2;
+    #subtract = () => this.#arg1 - this.#arg2;
+    #multiply = () => this.#arg1 * this.#arg2;
+    #divide = () => this.#arg1 / this.#arg2;
 
-    calculate() {
+    #prepareCalculation(onlyCalc = false) {
+        let result = 0;
+
         switch (this.#operator) {
             case '+' :
-                return this.#add();
+                result = this.#add();
+                break;
             case '-' :
-                return this.#subtract();
+                result = this.#subtract();
+                break;
             case '*' :
-                return this.#multiply();
+                result = this.#multiply();
+                break;
             case '/' :
-                return this.#divide();
+                result = this.#divide();
+                break;
             default:
                 this.#cleanAll();
                 throw "ERR";
         }
+
+        if (onlyCalc !== true)
+            this.#changePropertiesAfterCalculation(result);
+        
+        return result;
     }
+
+    calculate = () => this.#prepareCalculation();
 
     callAC() {
         this.#cleanAll();

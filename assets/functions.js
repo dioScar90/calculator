@@ -1,6 +1,3 @@
-const arg1 = document.querySelector("#arg1");
-const arg2 = document.querySelector("#arg2");
-const operator = document.querySelector("#operator");
 const calculator = new Calculator();
 
 function changeDisplay(value) {
@@ -47,8 +44,9 @@ function calculate(e) {
     }
 
     if (['+','-','*','/'].indexOf(key) > -1) {
-        calculator.setOperator(key);
-        // operator.value = key;
+        let result = calculator.setOperator(key);
+        if (result !== false)
+            changeDisplay(result);
         return;
     }
     
@@ -65,11 +63,4 @@ function calculate(e) {
         changeDisplay(currentNumber);
         return;
     }
-}
-
-function changeInput(id) {
-    // const input = document.querySelector("#click-value");
-    // const form = document.querySelector("#form-calc");
-    // input.value = id;
-    // form.submit();
 }
