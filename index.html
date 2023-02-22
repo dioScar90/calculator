@@ -9,40 +9,66 @@
 </head>
 <body>
     <main class="container">
-        <div class="calculator">
-            <div class="tela">
-                100
-            </div>
-            <div class="linha">
-                <button id="btn-ac" name="btn-ac" class="btn triple-btn detach">AC</button>
-                <button id="btn-divide" name="btn-divide" class="btn unique-btn operation">&divide;</button>
-            </div>
-            <div class="linha">
-                <button id="btn-7" name="btn-7" class="btn unique-btn">7</button>
-                <button id="btn-8" name="btn-8" class="btn unique-btn">8</button>
-                <button id="btn-9" name="btn-9" class="btn unique-btn">9</button>
-                <button id="btn-times" name="btn-times" class="btn unique-btn operation">&times;</button>
-            </div>
-            <div class="linha">
-                <button id="btn-4" name="btn-4" class="btn unique-btn">4</button>
-                <button id="btn-5" name="btn-5" class="btn unique-btn">5</button>
-                <button id="btn-6" name="btn-6" class="btn unique-btn">6</button>
-                <button id="btn-plus" name="btn-plus" class="btn unique-btn operation">&#43;</button>
-            </div>
-            <div class="linha">
-                <button id="btn-1" name="btn-1" class="btn unique-btn">1</button>
-                <button id="btn-2" name="btn-2" class="btn unique-btn">2</button>
-                <button id="btn-3" name="btn-3" class="btn unique-btn">3</button>
-                <button id="btn-minus" name="btn-minus" class="btn unique-btn operation">&minus;</button>
-            </div>
-            <div class="linha">
-                <button id="btn-0" name="btn-0" class="btn double-btn">0</button>
-                <button id="btn-comma" name="btn-comma" class="btn unique-btn">&#44;</button>
-                <button id="btn-equal" name="btn-equal" class="btn unique-btn detach">&#61;</button>
-            </div>
-        </div>
-    </main>
+        <form method="post" id="form-calc" onsubmit="calculate(event)">
+            <div class="calculator">
+                <div id="display" class="display">
+                    100
+                </div>
+                <div class="linha">
+                    <button id="btn-ac" class="btn triple-btn detach">AC</button>
+                    <input type="hidden" name="btn-ac" value="AC">
+                    <button id="btn-divide" class="btn unique-btn operation">&divide;</button>
+                    <input type="hidden" name="btn-divide" value="/">
+                </div>
+                <div class="linha">
+                    <button id="btn-7" class="btn unique-btn">7</button>
+                    <input type="hidden" name="btn-7" value="7">
+                    <button id="btn-8" class="btn unique-btn">8</button>
+                    <input type="hidden" name="btn-8" value="8">
+                    <button id="btn-9" class="btn unique-btn">9</button>
+                    <input type="hidden" name="btn-9" value="9">
+                    <button id="btn-times" class="btn unique-btn operation">&times;</button>
+                    <input type="hidden" name="btn-times" value="*">
+                </div>
+                <div class="linha">
+                    <button id="btn-4" class="btn unique-btn">4</button>
+                    <input type="hidden" name="btn-4" value="4">
+                    <button id="btn-5" class="btn unique-btn">5</button>
+                    <input type="hidden" name="btn-5" value="5">
+                    <button id="btn-6" class="btn unique-btn">6</button>
+                    <input type="hidden" name="btn-6" value="6">
+                    <button id="btn-plus" class="btn unique-btn operation">&#43;</button>
+                    <input type="hidden" name="btn-plus" value="+">
+                </div>
+                <div class="linha">
+                    <button id="btn-1" class="btn unique-btn">1</button>
+                    <input type="hidden" name="btn-1" value="1">
+                    <button id="btn-2" class="btn unique-btn">2</button>
+                    <input type="hidden" name="btn-2" value="2">
+                    <button id="btn-3" class="btn unique-btn">3</button>
+                    <input type="hidden" name="btn-3" value="3">
+                    <button id="btn-minus" class="btn unique-btn operation">&minus;</button>
+                    <input type="hidden" name="btn-minus" value="-">
+                </div>
+                <div class="linha">
+                    <button id="btn-0" class="btn double-btn">0</button>
+                    <input type="hidden" name="btn-0" value="0">
+                    <button id="btn-comma" class="btn unique-btn">&#44;</button>
+                    <input type="hidden" name="btn-comma" value=",">
+                    <button id="btn-equal" class="btn unique-btn detach">&#61;</button>
+                    <input type="hidden" name="btn-equal" value="=">
+                </div>
 
-    <script src="assets/script.js"></script>
+                <input type="hidden" id="arg1" value="">
+                <input type="hidden" id="arg2" value="">
+                <input type="hidden" id="operator" value="">
+            </div>
+
+            <!-- <button onclick="novoProp()" class="btn unique-btn">2</button> -->
+        </form>
+    </main>
+    
+    <script src="assets/ascript.js"></script>
+    <script src="assets/functions.js"></script>
 </body>
 </html>

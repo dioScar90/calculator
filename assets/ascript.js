@@ -3,18 +3,21 @@ class FormValues {
     #newObj;
 
     constructor(form) {
-        this.#dadta = new FormData(form);
+        this.#data = new FormData(form);
         this.#newObj = new Object();
     }
 
-    #processValues() {
+    #processValues(id) {
         for (const [name, val] of this.#data) {
-            this.#newObj[name] = val;
+            if (name == id) {
+                this.#newObj[name] = val;
+                return;
+            }
         }
     }
 
-    getValues() {
-        this.#processValues();
+    getValues(id) {
+        this.#processValues(id);
         return this.#newObj;
     }
 }
@@ -27,7 +30,7 @@ class Calculator {
     constructor(arg1, arg2, operator) {
         this.#arg1 = +arg1;
         this.#arg2 = +arg2;
-        this.#operator = +operator;
+        this.#operator = operator;
     }
 
     getArg1 = () => this.#arg1;
@@ -55,19 +58,36 @@ class Calculator {
     calculate() {
         switch (this.#operator) {
             case '+' :
-                this.#add();
-                break;
+                return this.#add();
             case '-' :
-                this.#subtract();
-                break;
-            case '/' :
-                this.#multiply();
-                break;
+                return this.#subtract();
             case '*' :
-                this.#divide();
-                break;
+                return this.#multiply();
+            case '/' :
+                return this.#divide();
             default:
                 throw "Error during calculate.";
         }
+    }
+}
+
+class Teste {
+    #prop1;
+
+    constructor() {
+        this.#prop1 = 'começou essa bagaca';
+        this.#printaPop();
+    }
+
+    #printaPop() {
+        console.log(this.#prop1);
+    }
+
+    printa() {
+        this.#printaPop();
+    }
+
+    mudaProp(value) {
+        this.#prop1 = value;
     }
 }

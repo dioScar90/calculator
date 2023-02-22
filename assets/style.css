@@ -6,7 +6,7 @@
     --detach: red;
     --white: white;
     --black: black;
-    --tela: aliceblue;
+    --display: aliceblue;
 }
 
 * {
@@ -41,12 +41,12 @@ main.container {
     flex-direction: column;
 }
 
-.tela {
+.display {
     display: flex;
     flex: 1;
     justify-content: end;
     align-items: center;
-    background-color: var(--tela);
+    background-color: var(--display);
     overflow: hidden;
     margin: 2px 1px;
     border-radius: 10px 10px 0px 0px;
@@ -57,7 +57,7 @@ main.container {
     display: flex;
 }
 
-.button {
+.btn {
     border-radius: 3px;
     margin: 1px;
     padding: 3px;
@@ -66,24 +66,24 @@ main.container {
     transition: background-color ease-in 150ms;
 }
 
-.button:hover {
+.btn:hover {
     background-color: var(--button-hover);
 }
 
-.button:focus, .button:active {
+.btn:focus, .btn:active {
     background-color: var(--button-focus);
     transition: none;
 }
 
-.unique-button {
+.unique-btn {
     flex-basis: 25%;
 }
 
-.double-button {
+.double-btn {
     flex-basis: 50%;
 }
 
-.triple-button {
+.triple-btn {
     flex-basis: 75%;
 }
 
