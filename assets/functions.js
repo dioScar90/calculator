@@ -19,13 +19,7 @@ function fazIsso() {
     changeDisplay(result);
 }
 
-function calculate(e) {
-    e.preventDefault();
-
-    const formValues = new FormValues(e.target);
-    let values = formValues.getValues(e.submitter.id);
-    let key = values[e.submitter.id];
-
+function calculate(key) {
     if (key == "AC") {
         calculator.callAC();
         changeDisplay(0);
@@ -64,3 +58,31 @@ function calculate(e) {
         return;
     }
 }
+
+function preCalculate(e) {
+    e.preventDefault();
+
+    const formValues = new FormValues(e.target);
+    let values = formValues.getValues(e.submitter.id);
+    let key = values[e.submitter.id];
+
+    calculate(key);
+}
+
+function keyPressed(e) {
+    e = e || window.event;
+    let key = e.keyCode || e.which;
+    return key == 13 ? '=' : String.fromCharCode(key);
+}
+
+document.onkeydown = function(event) {
+    let key = keyPressed(event);
+
+    const possibleKeys = ['0', 1, '2', '3', '4', '5', '6', '7', '8', '9', '0', '+', '-', '*', '/', ',', '.', '='];
+
+    if (possibleKeys.indexOf(key) > -1) {
+        // console.log('deu certo');
+        calculate(key);
+    }
+    // console.log(key);
+};
