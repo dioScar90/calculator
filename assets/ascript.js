@@ -42,7 +42,7 @@ class Calculator {
         if (this.#dot === true) {
             stringArg1 += '0'.repeat(this.#zerosAfterDot);
         }
-        return stringArg1;
+        return this.#returnToDisplay(stringArg1);
     }
     setArg1 = (value) => {
         let intValue = +value;
@@ -72,7 +72,7 @@ class Calculator {
         if (this.#dot === true) {
             stringArg2 += '0'.repeat(this.#zerosAfterDot);
         }
-        return stringArg2;
+        return this.#returnToDisplay(stringArg2);
     }
     setArg2 = (value) => {
         let intValue = +value;
@@ -109,7 +109,7 @@ class Calculator {
         this.#dot = false;
         this.#zerosAfterDot = 0;
         
-        return result;
+        return this.#returnToDisplay(result);
     }
     
     getDot = () => this.#dot;
@@ -124,6 +124,8 @@ class Calculator {
         this.#dot = false;
         this.#zerosAfterDot = 0;
     }
+
+    #returnToDisplay = (value) => (+value).toLocaleString('pt-BR', { maximumFractionDigits: 20 } );
 
     #changePropertiesAfterCalculation(result) {
         this.#cleanAll();
@@ -165,7 +167,7 @@ class Calculator {
         if (onlyCalc !== true)
             this.#changePropertiesAfterCalculation(result);
         
-        return result;
+        return this.#returnToDisplay(result);
     }
 
     calculate = () => this.#prepareCalculation();

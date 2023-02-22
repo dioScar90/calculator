@@ -2,10 +2,10 @@
     --fundo: #555;
     --button-hover: #888;
     --button-focus: #81763d;
-    --operation: orange;
-    --detach: red;
+    --operation: #17a2b8;
+    --detach: #20c997;
     --white: white;
-    --black: black;
+    --dark: #343a40;;
     --display: aliceblue;
 }
 
@@ -21,7 +21,7 @@
 body {
     margin: 0;
     border: 1px solid var(--fundo);
-    background-color: var(--black);
+    background-color: var(--dark);
 }
 
 main.container {
@@ -43,6 +43,7 @@ main.container {
 
 .display {
     display: flex;
+    font-size: xx-large;
     flex: 1;
     justify-content: end;
     align-items: center;

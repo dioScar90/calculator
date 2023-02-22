@@ -2,7 +2,7 @@ const calculator = new Calculator();
 
 function changeDisplay(value) {
     const display = document.querySelector("#display");
-    display.innerHTML = value;
+    display.firstElementChild.innerHTML = value;
 }
 
 function resetValues() {
