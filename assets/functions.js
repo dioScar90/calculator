@@ -76,13 +76,13 @@ function keyPressed(e) {
 }
 
 document.onkeydown = function(event) {
-    let key = keyPressed(event);
-
-    const possibleKeys = ['0', 1, '2', '3', '4', '5', '6', '7', '8', '9', '0', '+', '-', '*', '/', ',', '.', '='];
-
+    let key = event.key;
+    key = key   .replace("Enter", '=')
+                .replace("Escape", "AC")
+                .replace(',', '.');
+                
+    const possibleKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '+', '-', '*', '/', '.', '=', "AC"];
     if (possibleKeys.indexOf(key) > -1) {
-        // console.log('deu certo');
         calculate(key);
     }
-    // console.log(key);
 };

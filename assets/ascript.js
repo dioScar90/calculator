@@ -109,7 +109,7 @@ class Calculator {
         this.#dot = false;
         this.#zerosAfterDot = 0;
         
-        return this.#returnToDisplay(result);
+        return value === false ? false : this.#returnToDisplay(result);
     }
     
     getDot = () => this.#dot;
@@ -125,7 +125,8 @@ class Calculator {
         this.#zerosAfterDot = 0;
     }
 
-    #returnToDisplay = (value) => (+value).toLocaleString('pt-BR', { maximumFractionDigits: 20 } );
+    // Casa decimal limitada em 8 dígitos. Pode colocar até 20.
+    #returnToDisplay = (value) => (+value).toLocaleString('pt-BR', { maximumFractionDigits: 8 } );
 
     #changePropertiesAfterCalculation(result) {
         this.#cleanAll();
