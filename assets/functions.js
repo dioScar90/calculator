@@ -28,6 +28,8 @@ function calculate(key) {
 
     if (key == ".") {
         calculator.setDot();
+        let currentNumber = calculator.getArg1() !== '' && calculator.getOperator() != '' ? calculator.getArg2() : calculator.getArg1();
+        changeDisplay(currentNumber);
         return;
     }
 
@@ -51,7 +53,7 @@ function calculate(key) {
         return;
     }
     
-    if (calculator.getArg1() > 0 && calculator.getOperator() != '') {
+    if (calculator.getArg1() !== '' && calculator.getOperator() != '') {
         calculator.setArg2(key);
         let currentNumber = calculator.getArg2();
         changeDisplay(currentNumber);
@@ -74,15 +76,15 @@ function keyPressed(e) {
     let key = e.keyCode || e.which;
     return key == 13 ? '=' : String.fromCharCode(key);
 }
-
-document.onkeydown = function(event) {
+document.addEventListener('keydown', function(event) {
     let key = event.key;
     key = key   .replace("Enter", '=')
                 .replace("Escape", "AC")
                 .replace(',', '.');
-                
+    
+    console.log(key);
     const possibleKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '+', '-', '*', '/', '.', '=', "AC"];
     if (possibleKeys.indexOf(key) > -1) {
         calculate(key);
     }
-};
+});

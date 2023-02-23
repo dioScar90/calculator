@@ -39,9 +39,6 @@ class Calculator {
     
     getArg1 = () => {
         let stringArg1 = this.#arg1.toString();
-        if (this.#dot === true) {
-            stringArg1 += '0'.repeat(this.#zerosAfterDot);
-        }
         return this.#returnToDisplay(stringArg1);
     }
     setArg1 = (value) => {
@@ -52,10 +49,22 @@ class Calculator {
                 return;
             }
 
+            let tempNumber = '';
             const numbersAfterSplit = this.#arg1.toString().split('.');
             const lenAfterDot = numbersAfterSplit.length > 1 ? numbersAfterSplit[1].length : 0;
-            const tempNumber = this.#arg1 + +("0." + '0'.repeat(lenAfterDot) + intValue);
-            this.#arg1 = +tempNumber.toFixed(lenAfterDot + 1);
+            
+            if (lenAfterDot > 0) {
+                tempNumber = numbersAfterSplit[0] + '.' + numbersAfterSplit[1] + '0'.repeat(this.#zerosAfterDot) + intValue;
+                this.#arg1 = +tempNumber;
+                this.#zerosAfterDot = 0;
+                return;
+            }
+
+            tempNumber = numbersAfterSplit[0];
+            tempNumber += lenAfterDot > 0 ? '' : '.';
+            tempNumber += '0'.repeat(this.#zerosAfterDot) + intValue;
+            console.log(tempNumber);
+            this.#arg1 = +tempNumber;
             this.#zerosAfterDot = 0;
             return;
         }
@@ -69,9 +78,6 @@ class Calculator {
     
     getArg2 = () => {
         let stringArg2 = this.#arg2.toString();
-        if (this.#dot === true) {
-            stringArg2 += '0'.repeat(this.#zerosAfterDot);
-        }
         return this.#returnToDisplay(stringArg2);
     }
     setArg2 = (value) => {
@@ -82,15 +88,27 @@ class Calculator {
                 return;
             }
 
+            let tempNumber = '';
             const numbersAfterSplit = this.#arg2.toString().split('.');
             const lenAfterDot = numbersAfterSplit.length > 1 ? numbersAfterSplit[1].length : 0;
-            const tempNumber = this.#arg2 + +("0." + '0'.repeat(lenAfterDot) + intValue);
-            this.#arg2 = +tempNumber.toFixed(lenAfterDot + 1);
+            
+            if (lenAfterDot > 0) {
+                tempNumber = numbersAfterSplit[0] + '.' + numbersAfterSplit[1] + '0'.repeat(this.#zerosAfterDot) + intValue;
+                this.#arg2 = +tempNumber;
+                this.#zerosAfterDot = 0;
+                return;
+            }
+
+            tempNumber = numbersAfterSplit[0];
+            tempNumber += lenAfterDot > 0 ? '' : '.';
+            tempNumber += '0'.repeat(this.#zerosAfterDot) + intValue;
+            console.log(tempNumber);
+            this.#arg2 = +tempNumber;
             this.#zerosAfterDot = 0;
             return;
         }
 
-        if (this.#arg2 == 0) {
+        if (this.#arg2 === '') {
             this.#arg2 = intValue;
             return;
         }
@@ -109,7 +127,7 @@ class Calculator {
         this.#dot = false;
         this.#zerosAfterDot = 0;
         
-        return value === false ? false : this.#returnToDisplay(result);
+        return result === false ? false : this.#returnToDisplay(result);
     }
     
     getDot = () => this.#dot;
@@ -126,17 +144,27 @@ class Calculator {
     }
 
     // Casa decimal limitada em 8 dígitos. Pode colocar até 20.
-    #returnToDisplay = (value) => (+value).toLocaleString('pt-BR', { maximumFractionDigits: 8 } );
+    #returnToDisplay(value) {
+        let strToReturn = (+value).toLocaleString('pt-BR', { maximumFractionDigits: 8 } );
+        
+        if (this.#dot === true)
+            strToReturn += strToReturn.search(',') > -1 ? '' : ',';
+        
+        return strToReturn + '0'.repeat(this.#zerosAfterDot);
+    }
 
     #changePropertiesAfterCalculation(result) {
+        let operator = this.#operator;
+
         this.#cleanAll();
         
-        if (!this.#isInteger(result) && !isNaN(result)) {
-            this.#dot = true;
-            this.#zerosAfterDot = result.toString().split('.')[1].length;
-        }
+        // if (!this.#isInteger(result) && !isNaN(result)) {
+        //     this.#dot = true;
+        //     // this.#zerosAfterDot = result.toString().split('.')[1].length;
+        // }
 
         this.#arg1 = result;
+        this.#operator = operator;
     }
 
     #add = () => this.#arg1 + this.#arg2;
